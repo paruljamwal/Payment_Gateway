@@ -8,6 +8,7 @@ import {
   useState,
   type MouseEvent,
 } from "react";
+import { toast } from "sonner";
 import { CARD_TYPE_LABELS } from "@/constants/card";
 import {
   TRANSACTION_DETAILS_CLOSE_LABEL,
@@ -16,6 +17,10 @@ import {
   TRANSACTION_DETAILS_TITLE,
 } from "@/constants/payment";
 import { TRANSACTION_DETAIL_DIALOG_CLASS } from "@/constants/ui";
+import {
+  TOAST_TRANSACTION_ID_COPIED,
+  TOAST_TRANSACTION_ID_COPY_FAILED,
+} from "@/constants/toast";
 import type { Transaction } from "@/types/payment";
 import { formatMoneyAmount } from "@/utils/formatters/currencyDisplay";
 import { formatTransactionTimestamp } from "@/utils/transaction/formatting";
@@ -82,6 +87,7 @@ function CopyTransactionIdButton({ value }: { value: string }) {
     try {
       await navigator.clipboard.writeText(value);
       setCopied(true);
+      toast.success(TOAST_TRANSACTION_ID_COPIED);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -90,6 +96,7 @@ function CopyTransactionIdButton({ value }: { value: string }) {
       }, 2000);
     } catch {
       setCopied(false);
+      toast.error(TOAST_TRANSACTION_ID_COPY_FAILED);
     }
   };
 

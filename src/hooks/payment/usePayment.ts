@@ -1,9 +1,16 @@
 "use client";
 
 import { useCallback, useRef } from "react";
+import { toast } from "sonner";
 import { useStore } from "react-redux";
 import { PAYMENT_FLOW_ERROR_MESSAGES } from "@/constants/errors";
 import { PAYMENT_STATUS } from "@/constants/payment";
+import {
+  TOAST_PAYMENT_FAILED_TITLE,
+  TOAST_PAYMENT_SUCCESS_BODY,
+  TOAST_PAYMENT_SUCCESS_TITLE,
+  TOAST_PAYMENT_TIMEOUT_TITLE,
+} from "@/constants/toast";
 import { useAppDispatch } from "@/store/hooks";
 import type { AppDispatch, RootState } from "@/store/store";
 import {
@@ -60,6 +67,9 @@ function applyGatewayFlowResult(
       dispatch(upsertTransaction(terminal));
       dispatch(setPaymentStatus(PAYMENT_STATUS.SUCCESS));
       dispatch(clearPaymentError());
+      toast.success(TOAST_PAYMENT_SUCCESS_TITLE, {
+        description: TOAST_PAYMENT_SUCCESS_BODY,
+      });
       return;
     }
 
@@ -81,6 +91,7 @@ function applyGatewayFlowResult(
           errorType: "gateway",
         }),
       );
+      toast.error(TOAST_PAYMENT_FAILED_TITLE, { description: reason });
       return;
     }
 
@@ -102,6 +113,9 @@ function applyGatewayFlowResult(
           errorType: "network",
         }),
       );
+      toast.error(TOAST_PAYMENT_TIMEOUT_TITLE, {
+        description: reason,
+      });
       return;
     }
 
@@ -123,6 +137,9 @@ function applyGatewayFlowResult(
           errorType: "network",
         }),
       );
+      toast.error(TOAST_PAYMENT_TIMEOUT_TITLE, {
+        description: reason,
+      });
       return;
     }
 
@@ -144,6 +161,7 @@ function applyGatewayFlowResult(
           errorType: "gateway",
         }),
       );
+      toast.error(TOAST_PAYMENT_FAILED_TITLE, { description: reason });
       return;
     }
 
@@ -165,6 +183,7 @@ function applyGatewayFlowResult(
           errorType: "network",
         }),
       );
+      toast.error(TOAST_PAYMENT_FAILED_TITLE, { description: reason });
       return;
     }
 
@@ -186,6 +205,7 @@ function applyGatewayFlowResult(
           errorType: "gateway",
         }),
       );
+      toast.error(TOAST_PAYMENT_FAILED_TITLE, { description: reason });
       return;
     }
   }
