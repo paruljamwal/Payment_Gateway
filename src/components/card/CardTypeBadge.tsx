@@ -3,18 +3,24 @@ import {
   MASTERCARD_MARK_CLASS,
 } from "@/constants/colors";
 import { CARD_TYPE_LABELS } from "@/constants/card";
-import { CARD_INLINE_BADGE_CONTAINER_CLASS } from "@/constants/ui";
+import {
+  CARD_INLINE_BADGE_CONTAINER_CLASS,
+  CARD_INLINE_BADGE_EMBEDDED_CLASS,
+} from "@/constants/ui";
 import type { CardBrand } from "@/types/payment";
 
 export type CardTypeBadgeProps = {
   brand: CardBrand;
   /** Referenced by the card input's `aria-describedby` for screen readers. */
   descriptionId: string;
+  /** Use inside FormField input group (no extra border). */
+  variant?: "standalone" | "embedded";
 };
 
 export default function CardTypeBadge({
   brand,
   descriptionId,
+  variant = "standalone",
 }: CardTypeBadgeProps) {
   if (brand === "unknown") {
     return null;
@@ -48,8 +54,13 @@ export default function CardTypeBadge({
     }
   })();
 
+  const wrapClass =
+    variant === "embedded"
+      ? CARD_INLINE_BADGE_EMBEDDED_CLASS
+      : CARD_INLINE_BADGE_CONTAINER_CLASS;
+
   return (
-    <div className={CARD_INLINE_BADGE_CONTAINER_CLASS}>
+    <div className={wrapClass}>
       <span id={descriptionId} className="sr-only">
         {`Detected card: ${title}`}
       </span>

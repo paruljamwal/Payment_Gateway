@@ -295,6 +295,7 @@ export default function PaymentForm() {
                 <CardTypeBadge
                   brand={detectedBrand}
                   descriptionId={CARD_NUMBER_BRAND_HINT_ID}
+                  variant="embedded"
                 />
               )
             }

@@ -82,16 +82,32 @@ export const FORM_LABEL_CLASS =
 export const FORM_FIELD_STACK_CLASS = "flex min-w-0 flex-col gap-1.5";
 
 /** Default text-like control surface. */
-export function formControlClasses(options?: { invalid?: boolean }): string {
+export function formControlClasses(options?: {
+  invalid?: boolean;
+  /** Inner segment of an input group (border + focus ring on wrapper). */
+  embedded?: boolean;
+}): string {
+  const embedded = Boolean(options?.embedded);
   return clsx(
-    "w-full min-w-0 max-w-full rounded-lg border bg-white px-3 py-2.5 text-base text-zinc-900 shadow-sm transition sm:text-sm",
-    "border-zinc-300 placeholder:text-zinc-400",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
-    "disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500",
-    "dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-500",
-    "dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950",
-    "dark:disabled:bg-zinc-900",
-    options?.invalid &&
+    "w-full min-w-0 max-w-full px-3 py-2.5 text-base text-zinc-900 transition sm:text-sm",
+    "placeholder:text-zinc-400 dark:text-zinc-50 dark:placeholder:text-zinc-500",
+    "disabled:cursor-not-allowed disabled:text-zinc-500",
+    embedded
+      ? clsx(
+          "rounded-none border-0 bg-transparent shadow-none outline-none",
+          "focus-visible:ring-0 focus-visible:ring-offset-0",
+          "dark:bg-transparent",
+          "disabled:bg-transparent dark:disabled:bg-transparent",
+        )
+      : clsx(
+          "rounded-lg border bg-white shadow-sm",
+          "border-zinc-300 dark:border-zinc-700 dark:bg-zinc-950",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950",
+          "disabled:bg-zinc-100 dark:disabled:bg-zinc-900",
+        ),
+    !embedded &&
+      options?.invalid &&
       "!border-red-600 focus-visible:!ring-red-600 dark:!border-red-500 dark:focus-visible:!ring-red-500",
   );
 }
@@ -102,9 +118,13 @@ export const FORM_ERROR_TEXT_CLASS =
 export const FORM_GRID_TWO_COL_CLASS =
   "grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5";
 
-/** Wrapper around compact brand badge beside PAN input. */
+/** Wrapper around compact brand badge beside PAN input (standalone bordered pill). */
 export const CARD_INLINE_BADGE_CONTAINER_CLASS =
   "flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 px-2 dark:border-zinc-700 dark:bg-zinc-900";
+
+/** Inside FormField input group — no extra border (shell provides chrome). */
+export const CARD_INLINE_BADGE_EMBEDDED_CLASS =
+  "flex min-h-[2.125rem] items-center justify-center px-2";
 
 export const PAYMENT_OVERLAY_BACKDROP_CLASS = clsx(
   "absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-white/80 px-6 text-center backdrop-blur-sm dark:bg-zinc-950/80",
