@@ -26,7 +26,7 @@ export const TRANSACTION_HISTORY_CARD_CLASS =
 export const TRANSACTION_HISTORY_LIST_CLASS = "flex flex-col gap-3";
 
 export const TRANSACTION_DETAIL_DIALOG_CLASS =
-  "w-[min(100vw-2rem,28rem)] max-h-[min(90vh,32rem)] overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-900 shadow-xl backdrop:bg-black/50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
+  "box-border w-[min(28rem,calc(100vw-2rem))] max-h-[min(90dvh,32rem)] overflow-y-auto overscroll-contain rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-900 shadow-xl backdrop:bg-black/50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
 
 export const TRANSACTION_EMPTY_STATE_CLASS =
   "rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/80 px-6 py-12 text-center dark:border-zinc-600 dark:bg-zinc-900/40";
@@ -62,7 +62,7 @@ export const PAYMENT_SUBTITLE_CLASS =
 
 export const PAYMENT_SECTION_STACK_CLASS = "mb-6 space-y-2 md:mb-8 md:space-y-3";
 
-export const PAYMENT_FORM_STACK_CLASS = "flex flex-col gap-5 md:gap-6";
+export const PAYMENT_FORM_STACK_CLASS = "flex min-w-0 flex-col gap-5 md:gap-6";
 
 export const PAYMENT_PRIMARY_ACTION_LABEL = "Pay securely";
 
@@ -79,12 +79,12 @@ export const FORM_LABEL_CLASS =
   "text-sm font-medium text-zinc-800 dark:text-zinc-100";
 
 /** Vertical rhythm inside a single field. */
-export const FORM_FIELD_STACK_CLASS = "flex flex-col gap-1.5";
+export const FORM_FIELD_STACK_CLASS = "flex min-w-0 flex-col gap-1.5";
 
 /** Default text-like control surface. */
 export function formControlClasses(options?: { invalid?: boolean }): string {
   return clsx(
-    "w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-zinc-900 shadow-sm transition",
+    "w-full min-w-0 max-w-full rounded-lg border bg-white px-3 py-2.5 text-base text-zinc-900 shadow-sm transition sm:text-sm",
     "border-zinc-300 placeholder:text-zinc-400",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
     "disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500",
