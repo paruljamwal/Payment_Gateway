@@ -26,6 +26,11 @@ export type FormFieldProps = {
   /** Extra ids for `aria-describedby` (e.g. live region describing detected card). */
   accessoryDescribedById?: string;
   trailing?: ReactNode;
+  /**
+   * Always render the input-group shell (e.g. card number + optional badge slot).
+   * Prevents remounting the control when `trailing` goes from empty to populated.
+   */
+  reserveTrailingSlot?: boolean;
   children: ReactElement<ControlProps>;
 };
 
@@ -58,6 +63,7 @@ export default function FormField({
   error,
   accessoryDescribedById,
   trailing,
+  reserveTrailingSlot = false,
   children,
 }: FormFieldProps) {
   const errorId = `${id}-error`;
@@ -67,14 +73,15 @@ export default function FormField({
     return null;
   }
 
-  const hasTrailing = Boolean(trailing);
+  const showInputGroup = Boolean(trailing) || reserveTrailingSlot;
+  const trailingPresent = Boolean(trailing);
 
   const control = cloneElement(children, {
     id,
     className: clsx(
       formControlClasses({
         invalid: Boolean(error),
-        embedded: hasTrailing,
+        embedded: showInputGroup,
       }),
       children.props.className,
     ),
@@ -95,11 +102,20 @@ export default function FormField({
       <label htmlFor={id} className={FORM_LABEL_CLASS}>
         {label}
       </label>
-      {hasTrailing ? (
+      {showInputGroup ? (
         <div className={inputGroupShellClass}>
           <div className="min-w-0 flex-1">{control}</div>
-          <div className="flex shrink-0 items-stretch border-l border-zinc-200 bg-zinc-50/90 dark:border-zinc-700 dark:bg-zinc-900/80">
-            <div className="flex items-center">{trailing}</div>
+          <div
+            className={clsx(
+              "flex shrink-0 items-stretch",
+              trailingPresent
+                ? "border-l border-zinc-200 bg-zinc-50/90 dark:border-zinc-700 dark:bg-zinc-900/80"
+                : "w-0 min-w-0 overflow-hidden border-0 p-0",
+            )}
+          >
+            <div className={clsx("flex items-center", !trailingPresent && "hidden")}>
+              {trailing}
+            </div>
           </div>
         </div>
       ) : (

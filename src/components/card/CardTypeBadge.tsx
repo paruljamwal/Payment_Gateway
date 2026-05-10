@@ -2,7 +2,7 @@ import {
   CARD_INLINE_BADGE_CLASS,
   MASTERCARD_MARK_CLASS,
 } from "@/constants/colors";
-import { CARD_TYPE_LABELS } from "@/constants/card";
+import { CARD_BRAND_GUIDE } from "@/constants/card";
 import {
   CARD_INLINE_BADGE_CONTAINER_CLASS,
   CARD_INLINE_BADGE_EMBEDDED_CLASS,
@@ -26,7 +26,7 @@ export default function CardTypeBadge({
     return null;
   }
 
-  const title = CARD_TYPE_LABELS[brand];
+  const guide = CARD_BRAND_GUIDE[brand];
 
   const badgeVisual = (() => {
     switch (brand) {
@@ -60,9 +60,9 @@ export default function CardTypeBadge({
       : CARD_INLINE_BADGE_CONTAINER_CLASS;
 
   return (
-    <div className={wrapClass}>
+    <div className={wrapClass} title={guide.badgeTooltip || undefined}>
       <span id={descriptionId} className="sr-only">
-        {`Detected card: ${title}`}
+        {guide.badgeAriaDescription}
       </span>
       <span aria-hidden>{badgeVisual}</span>
     </div>

@@ -10,7 +10,12 @@ import {
   type FormEvent,
 } from "react";
 import type { PaymentFormData, PaymentFormField } from "@/types/payment";
-import { CARD_NUMBER_BRAND_HINT_ID, CVV_FIELD_PLACEHOLDER } from "@/constants/card";
+import {
+  CARD_BRAND_GUIDE,
+  CARD_NUMBER_BRAND_HINT_ID,
+  CARD_NUMBER_FORMAT_HINT_ID,
+  CVV_FIELD_PLACEHOLDER,
+} from "@/constants/card";
 import {
   FORM_GRID_TWO_COL_CLASS,
   PAYMENT_DETAILS_SECTION_HEADING,
@@ -241,8 +246,10 @@ export default function PaymentForm() {
         ? CVV_FIELD_PLACEHOLDER.standard
         : CVV_FIELD_PLACEHOLDER.unknown;
 
-  const cardAccessoryId =
-    detectedBrand === "unknown" ? undefined : CARD_NUMBER_BRAND_HINT_ID;
+  const cardAccessoryDescribedById =
+    detectedBrand === "unknown"
+      ? CARD_NUMBER_FORMAT_HINT_ID
+      : CARD_NUMBER_BRAND_HINT_ID;
 
   const preview = (
     <CardPreview
@@ -289,9 +296,10 @@ export default function PaymentForm() {
             id="cardNumber"
             label="Card number"
             error={visibleError("cardNumber")}
-            accessoryDescribedById={cardAccessoryId}
+            accessoryDescribedById={cardAccessoryDescribedById}
+            reserveTrailingSlot
             trailing={
-              detectedBrand === "unknown" ? undefined : (
+              detectedBrand === "unknown" ? null : (
                 <CardTypeBadge
                   brand={detectedBrand}
                   descriptionId={CARD_NUMBER_BRAND_HINT_ID}
@@ -313,6 +321,14 @@ export default function PaymentForm() {
               placeholder="4242 4242 4242 4242"
             />
           </FormField>
+          <p
+            {...(detectedBrand === "unknown"
+              ? { id: CARD_NUMBER_FORMAT_HINT_ID }
+              : { "aria-hidden": true as const })}
+            className="-mt-2 text-xs leading-snug text-zinc-600 dark:text-zinc-400"
+          >
+            {CARD_BRAND_GUIDE[detectedBrand].inputHint}
+          </p>
 
           <div className={FORM_GRID_TWO_COL_CLASS}>
             <FormField id="expiry" label="Expiry (MM/YY)" error={visibleError("expiry")}>
