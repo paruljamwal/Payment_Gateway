@@ -45,6 +45,124 @@ This application lets a customer enter card details, submit a payment to a **moc
 
 ---
 
+## Visual showcase
+
+> **Portfolio note:** Real captures from the running app (dark theme). They map to the behaviours above—**brand inference**, **cross-field validation**, **live preview sync**, **terminal Redux states** (success, **gateway failure**, **client timeout**), **Sonner toasts**, **`localStorage` history**, **retry budgeting**, and an accessible **`<dialog>` receipt**—plus **narrow-viewport** layouts.
+
+<p align="center">
+  <img src="docs/screenshots/01-desktop-checkout.png" alt="Payment gateway desktop UI with Visa card detected, filled amount INR, and live blue card preview" width="920" />
+</p>
+
+<p align="center"><strong>1 · Ready-to-pay desktop shell</strong> — Visa detection inside the PAN input group, INR/large-amount entry, CVV masking, and the preview mirroring digits + expiry + cardholder in lockstep.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/02-mobile-checkout.png" alt="Payment form showing PAN tip copy and empty card preview placeholders" width="920" />
+</p>
+
+<p align="center"><strong>2 · Guided empty state</strong> — Instructional subcopy explains **how networks are inferred** (Visa / Mastercard / Amex prefixes) before the user commits digits—reduces support-style friction in demos.</p>
+
+<details>
+<summary><strong>Expand — multi-brand validation, submission readiness, success & receipts</strong></summary>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/03-card-validation.png" alt="Mastercard detected with red validation border and digit-count error message" width="920" />
+</p>
+
+<p align="center"><strong>3 · Mastercard guardrails</strong> — Inline chip + rule-driven messaging (**16-digit PAN**) while the preview adopts Mastercard artwork—shows deterministic validation, not generic errors.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/04-processing-state.png" alt="American Express detected with PAN and CVV validation errors" width="920" />
+</p>
+
+<p align="center"><strong>4 · Amex + dependent fields</strong> — **15-digit** expectation and **CVV gated on PAN health** (“fix card number before CVV”) demonstrate dependency-aware form UX.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/05-terminal-outcome.png" alt="Checkout with complete Mastercard number and synced preview" width="920" />
+</p>
+
+<p align="center"><strong>5 · Complete PAN parity</strong> — Fully spaced Mastercard PAN, detected badge, and preview fidelity—proof of stable caret/formatting logic ahead of submit.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/06-transaction-history.png" alt="Payment successful summary card with amount and reference id plus transaction history and toast" width="920" />
+</p>
+
+<p align="center"><strong>6 · Terminal success + ledger</strong> — Redux terminal panel with **reference UUID**, matching **history row**, and **toast reinforcement**—shows observability-minded feedback loops interviewers look for.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/07-transaction-details.png" alt="Transaction details modal overlay with copy icon next to transaction id" width="520" />
+</p>
+
+<p align="center"><strong>7 · Receipt-grade drill-down</strong> — Modal **`<dialog>`** with status badge, formatted INR amount, retry metadata, and **copy-to-clipboard**—accessible escape path + audit-friendly layout.</p>
+
+<br />
+
+<p align="center"><sub>Assets live in <a href="docs/screenshots/"><code>docs/screenshots/</code></a> · rename guide in <a href="docs/screenshots/README.md"><code>README.md</code></a> there.</sub></p>
+
+</details>
+
+<details>
+<summary><strong>Expand — failure & timeout terminals, success toast, and mobile layouts</strong></summary>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/08-payment-failed.png" alt="Payment failed terminal with bank error, attempt counter, and retry versus new payment actions" width="920" />
+</p>
+
+<p align="center"><strong>8 · Gateway failure</strong> — Distinct **failed** terminal with surfaced **`failureReason`**, **attempt budget**, stable **reference UUID**, and paired **Retry / New payment** controls.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/09-payment-timeout.png" alt="Payment timed out terminal with Sonner toast mirroring the cancellation message" width="920" />
+</p>
+
+<p align="center"><strong>9 · Client-side timeout</strong> — **Timed-out** state after **`AbortController`** cancellation; duplicate messaging on-panel + **Sonner** illustrates resilient observability without losing the retry affordance.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/10-desktop-success-toast.png" alt="Payment successful desktop receipt with green Sonner toast at bottom" width="920" />
+</p>
+
+<p align="center"><strong>10 · Success + toast</strong> — Authorised path with **green toast reinforcement** alongside the terminal receipt—handy when recruiters skim for notification UX.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/11-mobile-payment-success.png" alt="Narrow mobile layout with card preview above payment successful summary and new payment button" width="390" />
+</p>
+
+<p align="center"><strong>11 · Mobile success stack</strong> — **Preview-first** stacking on a narrow viewport: card chrome, terminal summary, and history teaser—shows responsive composition without a separate breakpoint screenshot collage.</p>
+
+<br />
+
+<p align="center">
+  <img src="docs/screenshots/12-mobile-checkout-form.png" alt="Mobile payment form with Visa badge inside card number field and stacked inputs" width="390" />
+</p>
+
+<p align="center"><strong>12 · Mobile checkout form</strong> — Touch-sized controls, **embedded Visa badge** in the PAN group, masked CVV, and INR-friendly amount entry—the real narrow-form counterpart to the desktop hero above.</p>
+
+<br />
+
+<p align="center"><sub>Same folder: <a href="docs/screenshots/"><code>docs/screenshots/</code></a> · files <code>08</code>–<code>12</code>.</sub></p>
+
+</details>
+
+---
+
 ## Folder structure
 
 ```
@@ -204,7 +322,7 @@ Smoke-test after deploy: **`/debug`**, then **`/deployment-check`**, then **`/`*
 
 After changing Netlify settings, trigger **Deploy site → Clear cache and deploy site**.
 
-- **Screenshots**: Drop images under `docs/screenshots/` and link them here if you want a visual portfolio strip.
+Portfolio screenshots live under **`docs/screenshots/`** and are wired in [**Visual showcase**](#visual-showcase) above.
 
 ---
 
