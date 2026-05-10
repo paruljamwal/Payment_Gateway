@@ -79,14 +79,15 @@ export default function FormField({
       <label htmlFor={id} className={FORM_LABEL_CLASS}>
         {label}
       </label>
-      {trailing ? (
-        <div className="flex min-h-[42px] items-stretch gap-2">
-          <div className="min-w-0 flex-1">{control}</div>
-          <div className="flex shrink-0 items-center">{trailing}</div>
-        </div>
-      ) : (
-        control
-      )}
+      <div
+        className={clsx(
+          "flex min-h-[42px] items-stretch",
+          trailing ? "gap-2" : "gap-0",
+        )}
+      >
+        <div className="min-w-0 flex-1">{control}</div>
+        <div className="flex shrink-0 items-center">{trailing ?? null}</div>
+      </div>
       {error ? (
         <p id={errorId} role="alert" className={FORM_ERROR_TEXT_CLASS}>
           {error}
