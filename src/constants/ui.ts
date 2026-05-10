@@ -26,7 +26,7 @@ export const TRANSACTION_HISTORY_CARD_CLASS =
 export const TRANSACTION_HISTORY_LIST_CLASS = "flex flex-col gap-3";
 
 export const TRANSACTION_DETAIL_DIALOG_CLASS =
-  "box-border w-[min(28rem,calc(100vw-2rem))] max-h-[min(90dvh,32rem)] overflow-y-auto overscroll-contain rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-900 shadow-xl backdrop:bg-black/50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
+  "fixed left-1/2 top-1/2 z-[100] m-0 box-border min-w-0 w-[min(28rem,calc(100vw-2rem))] max-h-[min(90dvh,32rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain rounded-2xl border border-zinc-200 bg-white p-5 text-zinc-900 shadow-xl backdrop:bg-black/50 sm:p-6 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
 
 export const TRANSACTION_EMPTY_STATE_CLASS =
   "rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/80 px-6 py-12 text-center dark:border-zinc-600 dark:bg-zinc-900/40";

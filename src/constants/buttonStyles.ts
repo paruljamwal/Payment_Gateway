@@ -16,6 +16,19 @@ export function primaryActionButtonClass(disabled: boolean): string {
   );
 }
 
+/** Bordered neutral action — dialogs, secondary dismiss (reads softer than primary on dark UI). */
+export function outlineActionButtonClass(disabled: boolean): string {
+  return clsx(
+    "flex min-h-11 items-center justify-center rounded-lg border px-4 py-2.5 text-sm font-semibold",
+    TRANSITION_COLORS,
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
+    "dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950",
+    disabled
+      ? "cursor-not-allowed border-zinc-200 text-zinc-400 dark:border-zinc-700 dark:text-zinc-600"
+      : "cursor-pointer border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-100 dark:hover:bg-zinc-800",
+  );
+}
+
 /** Text-style control for secondary navigation (e.g. “Show more”). */
 export function ghostLinkButtonClass(): string {
   return clsx(

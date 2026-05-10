@@ -8,10 +8,11 @@ import {
 import clsx from "clsx";
 import {
   ghostLinkButtonClass,
+  outlineActionButtonClass,
   primaryActionButtonClass,
 } from "@/constants/buttonStyles";
 
-export type ButtonVariant = "primary" | "ghost";
+export type ButtonVariant = "primary" | "ghost" | "outline";
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -37,7 +38,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variantClass =
       variant === "ghost"
         ? ghostLinkButtonClass()
-        : primaryActionButtonClass(Boolean(disabled));
+        : variant === "outline"
+          ? outlineActionButtonClass(Boolean(disabled))
+          : primaryActionButtonClass(Boolean(disabled));
 
     return (
       <button

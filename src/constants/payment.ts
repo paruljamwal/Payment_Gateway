@@ -71,6 +71,10 @@ export const TRANSACTION_DETAILS_CLOSE_LABEL = "Close";
 
 export const TRANSACTION_DETAILS_TITLE = "Transaction details";
 
+export const TRANSACTION_DETAILS_COPY_ID_LABEL = "Copy";
+
+export const TRANSACTION_DETAILS_COPIED_LABEL = "Copied";
+
 /** Readable labels for persisted history rows and badges. */
 export const TRANSACTION_STATUS_LABELS: Record<PaymentStatus, string> = {
   idle: "Idle",
