@@ -108,7 +108,7 @@ This application lets a customer enter card details, submit a payment to a **moc
 
 <br />
 
-<p align="center"><sub>Assets live in <a href="docs/screenshots/"><code>docs/screenshots/</code></a> · rename guide in <a href="docs/screenshots/README.md"><code>README.md</code></a> there.</sub></p>
+<p align="center"><sub>Assets: <a href="docs/screenshots/"><code>docs/screenshots/</code></a> · maintainer notes: <a href="docs/screenshots/README.md"><code>docs/screenshots/README.md</code></a></sub></p>
 
 </details>
 
@@ -157,7 +157,7 @@ This application lets a customer enter card details, submit a payment to a **moc
 
 <br />
 
-<p align="center"><sub>Same folder: <a href="docs/screenshots/"><code>docs/screenshots/</code></a> · files <code>08</code>–<code>12</code>.</sub></p>
+<p align="center"><sub>Same folder · files <code>08</code>–<code>12</code> · catalogue in <a href="docs/screenshots/README.md#catalogue"><code>docs/screenshots/README.md</code></a></sub></p>
 
 </details>
 
@@ -252,7 +252,7 @@ flowchart LR
 
 ## Accessibility
 
-- **Keyboard**: Buttons for retry, new payment, history rows, and modal close; focus-visible rings on interactive elements.
+- **Keyboard**: Buttons for retry, new payment, modal close, and **copy transaction ID**; history rows are **`role="button"`** tiles (Enter / Space opens details); focus-visible rings on interactive elements.
 - **Focus**: After terminal outcomes, focus moves to **Retry** when available; otherwise to the status heading. Opening transaction details moves focus to the close control and restores focus on dismiss.
 - **ARIA / semantics**: Labels tied to controls (`htmlFor` / `id`), `aria-describedby` for hints and errors, `aria-live` regions where outcomes update, native **`<dialog>`** for details with explicit **`aria-modal`**.
 - **Non-visual**: Screen reader text for processing announcements; badges rely on visible text (avoid redundant duplicated labels).

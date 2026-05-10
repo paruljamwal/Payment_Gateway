@@ -1,8 +1,11 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo, type KeyboardEvent, useMemo } from "react";
 import { CARD_TYPE_LABELS } from "@/constants/card";
-import { TRANSACTION_HISTORY_CARD_CLASS } from "@/constants/ui";
+import {
+  TRANSACTION_HISTORY_CARD_CLASS,
+  TRANSACTION_HISTORY_RETRY_META_CLASS,
+} from "@/constants/ui";
 import type { Transaction } from "@/types/payment";
 import { formatMoneyAmount } from "@/utils/formatters/currencyDisplay";
 import {
@@ -10,6 +13,7 @@ import {
   formatTransactionTimestamp,
 } from "@/utils/transaction/formatting";
 import TransactionStatusBadge from "@/components/transaction/TransactionStatusBadge";
+import CopyTransactionIdButton from "@/components/transaction/CopyTransactionIdButton";
 
 export type TransactionCardProps = {
   transaction: Transaction;
@@ -34,44 +38,75 @@ function TransactionCardImpl({
 
   const cardLabel = CARD_TYPE_LABELS[transaction.cardType];
 
-  const summaryLine = useMemo(() => {
-    const retrySegment =
-      transaction.retryCount > 0
-        ? `, ${transaction.retryCount} retry attempts`
-        : "";
-    return `${amountLabel}, ${transaction.currency}${retrySegment}`;
-  }, [amountLabel, transaction.currency, transaction.retryCount]);
-
   const ariaLabel = useMemo(
     () => formatTransactionCardAriaLabel(transaction),
     [transaction],
   );
 
+  const retryChip =
+    transaction.retryCount > 0 ? (
+      <span className={TRANSACTION_HISTORY_RETRY_META_CLASS}>
+        {transaction.retryCount === 1
+          ? "1 retry"
+          : `${transaction.retryCount} retries`}
+      </span>
+    ) : null;
+
+  const activate = () => {
+    onSelect(transaction);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      activate();
+    }
+  };
+
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       className={TRANSACTION_HISTORY_CARD_CLASS}
       aria-current={isSelected ? "true" : undefined}
       aria-label={ariaLabel}
-      onClick={() => {
-        onSelect(transaction);
-      }}
+      onClick={activate}
+      onKeyDown={handleKeyDown}
     >
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="min-w-0 flex-1 space-y-1">
-          <p className="truncate font-mono text-xs text-zinc-500 dark:text-zinc-400">
-            {transaction.id}
-          </p>
-          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            {summaryLine}
-          </p>
+      <div className="flex min-w-0 flex-row items-center justify-between gap-4">
+        <div className="min-w-0 flex-1 space-y-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <p
+              className="min-w-0 flex-1 truncate font-mono text-[11px] leading-snug text-zinc-500 dark:text-zinc-400 sm:text-xs"
+              title={transaction.id}
+            >
+              {transaction.id}
+            </p>
+            <CopyTransactionIdButton
+              value={transaction.id}
+              isolateActivation
+              size="compact"
+            />
+          </div>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="text-sm font-semibold tabular-nums text-zinc-900 dark:text-zinc-50">
+              {amountLabel}
+            </span>
+            <span className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              {transaction.currency}
+            </span>
+            {retryChip}
+          </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
             {stamp} · {cardLabel}
           </p>
         </div>
-        <TransactionStatusBadge status={transaction.status} />
+        <TransactionStatusBadge
+          status={transaction.status}
+          className="shrink-0 self-center"
+        />
       </div>
-    </button>
+    </div>
   );
 }
 

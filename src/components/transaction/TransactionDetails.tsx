@@ -1,32 +1,21 @@
 "use client";
 
 import clsx from "clsx";
-import {
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type MouseEvent,
-} from "react";
-import { toast } from "sonner";
+import { useEffect, useId, useRef, type MouseEvent } from "react";
 import { CARD_TYPE_LABELS } from "@/constants/card";
 import {
   TRANSACTION_DETAILS_CLOSE_LABEL,
-  TRANSACTION_DETAILS_COPIED_LABEL,
-  TRANSACTION_DETAILS_COPY_ID_LABEL,
   TRANSACTION_DETAILS_TITLE,
 } from "@/constants/payment";
 import { TRANSACTION_DETAIL_DIALOG_CLASS } from "@/constants/ui";
-import {
-  TOAST_TRANSACTION_ID_COPIED,
-  TOAST_TRANSACTION_ID_COPY_FAILED,
-} from "@/constants/toast";
 import type { Transaction } from "@/types/payment";
 import { formatMoneyAmount } from "@/utils/formatters/currencyDisplay";
 import { formatTransactionTimestamp } from "@/utils/transaction/formatting";
 import TransactionStatusBadge from "@/components/transaction/TransactionStatusBadge";
 import { Button } from "@/components/ui/Button";
 import SectionCard from "@/components/ui/SectionCard";
+import CopyTransactionIdButton from "@/components/transaction/CopyTransactionIdButton";
+import IconClose from "@/components/ui/IconClose";
 
 export type TransactionDetailsProps = {
   transaction: Transaction | null;
@@ -35,103 +24,6 @@ export type TransactionDetailsProps = {
 
 const DETAIL_LABEL_CLASS =
   "text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-300";
-
-function IconCopy({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-    </svg>
-  );
-}
-
-function IconCheck({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M20 6L9 17l-5-5" />
-    </svg>
-  );
-}
-
-function CopyTransactionIdButton({ value }: { value: string }) {
-  const [copied, setCopied] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(true);
-      toast.success(TOAST_TRANSACTION_ID_COPIED);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    } catch {
-      setCopied(false);
-      toast.error(TOAST_TRANSACTION_ID_COPY_FAILED);
-    }
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      title={
-        copied
-          ? TRANSACTION_DETAILS_COPIED_LABEL
-          : `${TRANSACTION_DETAILS_COPY_ID_LABEL} transaction ID`
-      }
-      aria-label={
-        copied
-          ? `${TRANSACTION_DETAILS_COPIED_LABEL}, transaction ID`
-          : `${TRANSACTION_DETAILS_COPY_ID_LABEL} transaction ID`
-      }
-      className={clsx(
-        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors",
-        "border-zinc-300 text-zinc-700 hover:bg-zinc-100",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
-        "dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800",
-        "dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950",
-        copied &&
-          "border-emerald-600 text-emerald-700 dark:border-emerald-600 dark:text-emerald-400",
-      )}
-    >
-      {copied ? (
-        <IconCheck className="h-4 w-4" />
-      ) : (
-        <IconCopy className="h-4 w-4" />
-      )}
-    </button>
-  );
-}
 
 function TransactionDetailRows({
   transaction,
@@ -280,22 +172,11 @@ export default function TransactionDetails({
               type="button"
               variant="outline"
               data-tx-details-close
-              className="!mt-0 flex size-11 shrink-0 items-center justify-center p-0"
+              className="!mt-0 flex size-11 shrink-0 items-center justify-center !min-h-0 p-0 !px-0 !py-0 leading-none font-normal"
               onClick={onClose}
               aria-label={TRANSACTION_DETAILS_CLOSE_LABEL}
             >
-              <svg
-                aria-hidden
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <path d="M18 6 6 18M6 6l12 12" />
-              </svg>
+              <IconClose className="pointer-events-none block size-6 shrink-0" />
             </Button>
           </div>
           <TransactionDetailRows

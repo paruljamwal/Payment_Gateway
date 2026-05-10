@@ -25,6 +25,10 @@ export const TRANSACTION_HISTORY_CARD_CLASS =
 
 export const TRANSACTION_HISTORY_LIST_CLASS = "flex flex-col gap-3";
 
+/** Muted pill for retry metadata on history rows (not a payment-status badge). */
+export const TRANSACTION_HISTORY_RETRY_META_CLASS =
+  "inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 px-2 py-0.5 text-[11px] font-medium text-zinc-600 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300";
+
 export const TRANSACTION_DETAIL_DIALOG_CLASS =
   "fixed left-1/2 top-1/2 z-[100] m-0 box-border min-w-0 w-[min(28rem,calc(100vw-2rem))] max-h-[min(90dvh,32rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain rounded-2xl border border-zinc-200 bg-white p-5 text-zinc-900 shadow-xl backdrop:bg-black/50 sm:p-6 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
 
