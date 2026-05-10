@@ -1,19 +1,24 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import "sonner/dist/styles.css";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
 import { useTransactionPersistence } from "@/hooks/transaction/useTransactionPersistence";
 import { store } from "@/store/store";
 
-function ClientToaster() {
-  const [mounted, setMounted] = useState(false);
+function noopSubscribe(): () => void {
+  return () => {};
+}
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+/** Avoid SSR markup for Sonner (theme="system" hydration mismatch); no setState in effects. */
+function useClientMounted(): boolean {
+  return useSyncExternalStore(noopSubscribe, () => true, () => false);
+}
+
+function ClientToaster() {
+  const mounted = useClientMounted();
 
   if (!mounted) {
     return null;
