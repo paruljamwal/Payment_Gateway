@@ -192,14 +192,15 @@ export default function PaymentForm() {
   const handleExpiryChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const input = event.target;
-      const caret = input.selectionStart ?? 0;
-      const digitCaret = countDigitsBeforeFormattedIndex(values.expiry, caret);
-      const next = sanitizeExpiryInput(input.value);
+      const caret = input.selectionStart ?? input.selectionEnd ?? 0;
+      const liveValue = input.value;
+      const digitCaret = countDigitsBeforeFormattedIndex(liveValue, caret);
+      const next = sanitizeExpiryInput(liveValue);
       const nextDigits = next.replace(/\D/g, "");
       expiryCaretDigitsRef.current = Math.min(digitCaret, nextDigits.length);
       handleChange("expiry", next);
     },
-    [handleChange, values.expiry],
+    [handleChange],
   );
 
   const handleCvvChange = useCallback(
@@ -304,6 +305,7 @@ export default function PaymentForm() {
               name="cardNumber"
               inputMode="numeric"
               autoComplete="cc-number"
+              className="tabular-nums"
               value={formatCardNumber(values.cardNumber)}
               onChange={handleCardNumberChange}
               onBlur={() => markTouched("cardNumber")}
@@ -319,6 +321,7 @@ export default function PaymentForm() {
                 name="expiry"
                 inputMode="numeric"
                 autoComplete="cc-exp"
+                className="tabular-nums"
                 value={values.expiry}
                 onChange={handleExpiryChange}
                 onBlur={() => markTouched("expiry")}
@@ -332,6 +335,7 @@ export default function PaymentForm() {
                 name="cvv"
                 inputMode="numeric"
                 autoComplete="cc-csc"
+                className="tabular-nums"
                 value={values.cvv}
                 onChange={handleCvvChange}
                 onBlur={() => markTouched("cvv")}
@@ -345,6 +349,7 @@ export default function PaymentForm() {
               type="text"
               name="amount"
               inputMode="decimal"
+              className="tabular-nums"
               value={values.amount}
               onChange={(event) => handleChange("amount", event.target.value)}
               onBlur={() => markTouched("amount")}
