@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { useSyncExternalStore } from "react";
-import "sonner/dist/styles.css";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
 import { useTransactionPersistence } from "@/hooks/transaction/useTransactionPersistence";

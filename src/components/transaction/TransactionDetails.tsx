@@ -280,10 +280,22 @@ export default function TransactionDetails({
               type="button"
               variant="outline"
               data-tx-details-close
-              className="!mt-0 min-h-11 min-w-[96px] shrink-0"
+              className="!mt-0 flex size-11 shrink-0 items-center justify-center p-0"
               onClick={onClose}
+              aria-label={TRANSACTION_DETAILS_CLOSE_LABEL}
             >
-              {TRANSACTION_DETAILS_CLOSE_LABEL}
+              <svg
+                aria-hidden
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
             </Button>
           </div>
           <TransactionDetailRows
