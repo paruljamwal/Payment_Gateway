@@ -21,7 +21,7 @@ export const TRANSACTION_HISTORY_SECTION_TITLE_CLASS =
   "text-lg font-semibold text-zinc-900 dark:text-zinc-50";
 
 export const TRANSACTION_HISTORY_CARD_CLASS =
-  "w-full rounded-xl border border-zinc-200 bg-white p-4 text-left shadow-sm transition hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:border-zinc-600 dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950";
+  "w-full cursor-pointer rounded-xl border border-zinc-200 bg-white p-4 text-left shadow-sm transition hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:border-zinc-600 dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950";
 
 export const TRANSACTION_HISTORY_LIST_CLASS = "flex flex-col gap-3";
 

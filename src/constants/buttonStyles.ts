@@ -32,7 +32,7 @@ export function outlineActionButtonClass(disabled: boolean): string {
 /** Text-style control for secondary navigation (e.g. “Show more”). */
 export function ghostLinkButtonClass(): string {
   return clsx(
-    "inline-flex items-center justify-center rounded-md px-1 py-1 text-sm font-semibold text-zinc-900 underline-offset-4",
+    "inline-flex cursor-pointer items-center justify-center rounded-md px-1 py-1 text-sm font-semibold text-zinc-900 underline-offset-4",
     TRANSITION_COLORS,
     "hover:underline",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2",
