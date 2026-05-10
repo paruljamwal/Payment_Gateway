@@ -33,7 +33,7 @@ yarn-error.log*
 .env.*
 !.env.example
 
-# vercel / netlify
+# Host-local metadata (CLI / dashboard tooling)
 .vercel
 .netlify
 

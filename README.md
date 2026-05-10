@@ -183,6 +183,13 @@ flowchart LR
 
 ## Deploying on Netlify
 
+**Production is intended to run only on Netlify** (`netlify.toml` + `@netlify/plugin-nextjs`). This repo does **not** include Vercel configuration.
+
+If Vercel is still connected to the same GitHub repository, every push can trigger a **second** deployment there (often failing while Netlify succeeds). To stop that entirely:
+
+1. Open [Vercel Dashboard](https://vercel.com/dashboard) → select this site → **Settings** → **Git** → **Disconnect**, or delete the Vercel project.
+2. Optional: on GitHub → repo **Settings** → **GitHub Apps** / **Installed GitHub Apps** → revoke or adjust **Vercel** if it still posts checks.
+
 The Next.js app lives at the **repository root** (one `package.json`, one `package-lock.json`, one `netlify.toml`). The app uses **`@netlify/plugin-nextjs`** so App Router + **`/api/pay`** deploy correctly.
 
 | Setting | Value |
